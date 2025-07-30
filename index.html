@@ -5,6 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cats and their facts</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #ancient,
@@ -15,7 +20,7 @@
 </head>
 
 <body class="bg-yellow-50 font-sans text-gray-800 min-h-screen flex items-center justify-center">
-<header class="w-full max-w-4xl p-6 bg-yellow-100 shadow-md rounded-lg text-center">
+    <header class="w-full max-w-4xl p-6 bg-yellow-100 shadow-md rounded-lg text-center">
         <h1 class="text-4xl font-bold mb-2 m-10">🐱 Cats and their Facts 😻</h1>
         <h2 class="text-2xl mb-4 text-gray-600  m-10">History of Cats 📚⏳🌍🐱📜</h2>
         <div class="space-x-4 mb-6">
@@ -79,20 +84,20 @@
         });
         // for facts
         var factbtn = document.querySelector('.factbtn')
-       factbtn.addEventListener('click', () => {
-    var header = document.querySelector('header');
-    var output = document.querySelector('.output');
-    header.classList.add('hidden');
-    output.innerHTML = '';
+        factbtn.addEventListener('click', () => {
+            var header = document.querySelector('header');
+            var output = document.querySelector('.output');
+            header.classList.add('hidden');
+            output.innerHTML = '';
 
-    function loadCatFact() {
-        Promise.all([
-            fetch('https://catfact.ninja/fact').then(res => res.json()),
-            Promise.resolve('https://cataas.com/cat?timestamp=' + new Date().getTime())
-        ]).then(([factData, imageUrl]) => {
-            output.innerHTML = `
+            function loadCatFact() {
+                Promise.all([
+                    fetch('https://catfact.ninja/fact').then(res => res.json()),
+                    Promise.resolve('https://cataas.com/cat?timestamp=' + new Date().getTime())
+                ]).then(([factData, imageUrl]) => {
+                    output.innerHTML = `
                 <div class="flex flex-col items-center mt-10 space-y-6">
-                    <img src="${imageUrl}" alt="Random Cat" class="rounded-lg shadow-lg max-w-md" />
+                    <img src="${imageUrl}" alt="Random Cat" class=" h-auto w-[100px] rounded-lg shadow-lg max-w-md" />
                     <div class="bg-white p-4 rounded-lg shadow-md max-w-md text-center">
                         <h3 class="text-xl font-bold mb-2">😺 Cat Fact</h3>
                         <p class="text-gray-700 text-base">${factData.fact}</p>
@@ -103,18 +108,18 @@
                 </div>
             `;
 
-            var backbtn = document.querySelector('.back');
-            backbtn.addEventListener('click', () => {
-                header.classList.remove('hidden');
-                output.innerHTML = '';
-                clearInterval(intervalId); 
-            });
-        });
-    }
+                    var backbtn = document.querySelector('.back');
+                    backbtn.addEventListener('click', () => {
+                        header.classList.remove('hidden');
+                        output.innerHTML = '';
+                        clearInterval(intervalId);
+                    });
+                });
+            }
 
-    loadCatFact(); 
-    var intervalId = setInterval(loadCatFact, 10000); 
-});
+            loadCatFact();
+            var intervalId = setInterval(loadCatFact, 10000);
+        });
 
     </script>
 </body>
