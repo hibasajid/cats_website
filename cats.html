@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cats and their facts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #ancient,
+        #modern {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-yellow-50 font-sans text-gray-800 min-h-screen flex items-center justify-center">
+<header class="w-full max-w-4xl p-6 bg-yellow-100 shadow-md rounded-lg text-center">
+        <h1 class="text-4xl font-bold mb-2 m-10">🐱 Cats and their Facts 😻</h1>
+        <h2 class="text-2xl mb-4 text-gray-600  m-10">History of Cats 📚⏳🌍🐱📜</h2>
+        <div class="space-x-4 mb-6">
+            <button id="ancienttimes"
+                class="bg-purple-600 m-6 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded transition">
+                Cats in Ancient Times
+            </button>
+            <button id="moderntimes"
+                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition">
+                Cats in Modern Times
+            </button>
+        </div>
+        <div id="ancient" class="max-w-2xl mx-auto bg-white p-4 rounded-lg shadow">
+            <h4 class="text-xl font-semibold mb-2">🌍👀 Long ago in Ancient Times...</h4>
+            <h6 class="text-sm font-bold text-gray-600">EG</h6>
+            <p class="text-base mb-2">🇪🇬⚱️🐈‍⬛ → Cats were worshipped in Ancient Egypt. They were seen as sacred
+                protectors
+                of homes and crops.
+                👑🛕🖼️ → Even Pharaohs honored them in art and tombs.
+                🚢🐱💨 → Cats spread across the world via ships as mousers during sea voyages.</p>
+            <h6 class="text-sm font-bold text-gray-600">🇬🇷🇮🇳🇨🇳</h6>
+            <p class="text-base">🇬🇷🇮🇳🇨🇳 → They reached Greece, India, China, and beyond.
+                🏰⚔️🐈 → In Medieval Europe, cats were both loved and feared—sometimes seen as magical, even witchy!
+                🔥😿 → Sadly, many were persecuted during superstitious times.</p>
+        </div>
+
+        <div id="modern" class="max-w-2xl mx-auto bg-white p-4 rounded-lg shadow">
+            <h4 class="text-xl font-semibold mb-2">🧭🌎🐾 Age of Exploration</h4>
+            <p class="text-base">🧭🌎🐾 → During Age of Exploration, cats traveled to the Americas with explorers.
+                🌽🐭🐱 → They helped protect food from rodents and became farm companions.
+                🛋️📚🧶 → In modern times, cats became cozy companions in homes worldwide.
+                📸🌐😹 → Today, they're stars of the internet — from memes to TikToks!</p>
+        </div>
+        <button
+            class="factbtn mt-6 bg-pink-500 hover:bg-pink-600 text-white text-2xl font-bold py-4 px-6 rounded-lg transition shadow-lg">
+            DO You want to learn facts about cats?
+        </button>
+    </header>
+    <div class="output"></div>
+
+    <script>
+        //  for ancient display
+        var ancientbutton = document.getElementById('ancienttimes').addEventListener('click', () => {
+            var ancient = document.getElementById('ancient');
+            var modern = document.getElementById('modern');
+            ancient.style.display = 'block';
+            modern.style.display = 'none';
+            setTimeout(() => {
+                ancient.style.display = 'none';
+            }, 5000);
+        });
+        // for modern display
+        var modernbutton = document.getElementById('moderntimes').addEventListener('click', () => {
+            var modern = document.getElementById('modern');
+            var ancient = document.getElementById('ancient');
+            modern.style.display = 'block';
+            ancient.style.display = 'none';
+            setTimeout(() => {
+                modern.style.display = 'none';
+            }, 5000);
+        });
+        // for facts
+        var factbtn = document.querySelector('.factbtn')
+       factbtn.addEventListener('click', () => {
+    var header = document.querySelector('header');
+    var output = document.querySelector('.output');
+    header.classList.add('hidden');
+    output.innerHTML = '';
+
+    function loadCatFact() {
+        Promise.all([
+            fetch('https://catfact.ninja/fact').then(res => res.json()),
+            Promise.resolve('https://cataas.com/cat?timestamp=' + new Date().getTime())
+        ]).then(([factData, imageUrl]) => {
+            output.innerHTML = `
+                <div class="flex flex-col items-center mt-10 space-y-6">
+                    <img src="${imageUrl}" alt="Random Cat" class="rounded-lg shadow-lg max-w-md" />
+                    <div class="bg-white p-4 rounded-lg shadow-md max-w-md text-center">
+                        <h3 class="text-xl font-bold mb-2">😺 Cat Fact</h3>
+                        <p class="text-gray-700 text-base">${factData.fact}</p>
+                    </div>
+                    <button class="back text-2xl bg-red-500 hover:bg-red-600 text-white font-extrabold py-4 px-8 rounded-xl shadow-lg transition duration-300">
+                        🚫 I do not want these facts
+                    </button>
+                </div>
+            `;
+
+            var backbtn = document.querySelector('.back');
+            backbtn.addEventListener('click', () => {
+                header.classList.remove('hidden');
+                output.innerHTML = '';
+                clearInterval(intervalId); 
+            });
+        });
+    }
+
+    loadCatFact(); 
+    var intervalId = setInterval(loadCatFact, 10000); 
+});
+
+    </script>
+</body>
+
+</html>
