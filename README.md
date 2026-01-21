@@ -1,0 +1,1 @@
+A simple and fun website that displays random cat facts for cat lovers everywhere. Each visit (or click) reveals an interesting, surprising, or adorable fact about cats, making it both entertaining and educational.
